@@ -1,20 +1,15 @@
 import express from 'express';
+import path from 'path';
+import routes from './routes';
 
 const app = express();
 
-app.get('/users', (request, response) => {
-  console.log('Listagem de usuários');
-
-  return response.json(['Diego', 'Cleiton', 'Robson', 'Daniel']);
-});
-
-app.post('/users', (request, response) => {
-  const user = {
-    name: 'Diego',
-    email: 'diego@rocketseat.com.br'
-  };
-
-  return response.json(user);
-})
+// Express use(): Acts like plugin installation
+// Understands JSON on body requests.
+app.use(express.json());
+// Apply routes froum routes.ts file.
+app.use(routes);
+// Serve static assets.
+app.use('/assets', express.static(path.resolve(__dirname, '..', 'assets')));
 
 app.listen(3333);
